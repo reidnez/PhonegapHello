@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeeScan HQ</title>
+    <link rel="shortcut icon" href="https://people.seescan.com/assets/themes/sparky_lte/favicon.ico">
+
+    <!-- LiveReload script -->
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    <script src="libs/jquery-1.11.1.min.js"></script>
+
+    <script src="libs/angular.min.js"></script>
+    <script src="libs/ngmodules/angular-route.js"></script>
+    <script src="libs/bootstrap/bootstrap.min.js"></script>
+
+    <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="libs/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <link href="mainPageStyles.css" rel="stylesheet">
+    <link href="Views/navPaneStyles.css" rel="stylesheet">
+
+    <script src="Controllers/mainController.js"></script>
+
+    <script src="Controllers/navController.js"></script>
+    <script src="Controllers/tableController.js"></script>
+    <script src="Controllers/navController.js"></script>
+    <script src="Controllers/equipmentCtrl.js"></script>
+    <script src="Resources/utilities.js"></script>
+
+</head>
+<body ng-controller="mainCtrl">
+<div class="container-fluid">
+   <div class="row">
+    <div class="navbar" id="mainHeader">
+        <div class="navbar-inner" >
+            <a class="brand" href="/">
+                <img alt="HQ" src="Resources/Images/seeScanLogo.png">
+            </a>
+            <div class="container">
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xs-12" id="mainPane">
+        <div class="panel panel-default" ng-controller="navCtrl">
+            <div class="panel-heading">
+                <ul class="nav nav-tabs">
+                    <li ng-repeat="button in paneButtons" ng-class="{active: button.toggled}" ng-click="toggleButton(button)">
+                        <a href="{{button.link}}">{{button.title}}</a>
+                    </li>
+                </ul>
+            </div>
+            <ng-view/>
+        </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

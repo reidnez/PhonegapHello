@@ -1,0 +1,79 @@
+<style>
+    #enterNewDeviceHeading {text-align: center;}
+    span.glyphicon {font-size: 1.3em;}
+    span.glyphicon-remove {color:red; margin-left: 20px;}
+    .label {margin-left: 8px;}
+    .btn {margin-right:10px;}
+    .col-xs-6, .col-xs-4 {float: left;}
+    .table-button{margin-left: 10px;}
+</style>
+
+<div class="panel" ng-controller="equipmentCtrl" >
+    <div class="well">
+        <div class="btn-group">
+            <button type="button" id="tableButton" ng-click="tableModeButtonPressed('table')"
+                    ng-class="{'btn btn-primary' : states.tableMode, 'btn btn-default' : !states.tableMode}"><span class="glyphicon glyphicon-list"></span> Table</button>
+            <button type="button" id="gridButton" ng-click="tableModeButtonPressed('grid')"
+                    ng-class="{'btn btn-primary' : !states.tableMode, 'btn btn-default' : states.tableMode}"><span class="glyphicon glyphicon-th"></span> Grid</button>
+        </div>
+        <button class="toolButton btn btn-success" ng-click="addButtonPressed()"><span class="glyphicon glyphicon-plus-sign"></span> Add</button>
+        <button class="toolButton btn btn-warning" ng-click="editButtonPressed()" id="editButton"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+    </div>
+
+    <div class="alert alert-danger" role="alert" ng-show="states.promptToDeleteMode">
+        Are you sure you want to delete this device? This action cannot be undone.
+        <button class="toolButton btn btn-success" ng-click="cancelDeleteButtonPressed()">Cancel</button>
+        <button class="toolButton btn btn-danger" ng-click="confirmDeleteButtonPressed()"><span class="glyphicon glyphicon-ban-circle"></span> Delete</button>
+    </div>
+
+    <form role="form" ng-show="states.enterNewDeviceMode">
+        <div class="container">
+            <h4 id="enterNewDeviceHeading">Please enter details for your new device:</h4>
+            <div class="col-xs-4">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                        Device Type
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#/equipment">CS-65</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#/equipment">SR-24</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#/equipment">SR-60</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <input type="textfield" placeholder="Serial Number"/>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <div ng-show="states.tableMode">
+        <table class="table table-striped">
+            <thead>
+            <tr><th ng-show="states.editMode"><span class="glyphicon glyphicon-remove"></span></th><th>Type</th><th>Serial Number</th><th>Software Version</th><th>Jobs</th></tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="device in devices">
+                <td ng-show="states.editMode">
+                    <button class="btn btn-warning" ng-click="promptToDeleteDevice(device)">Delete</button>
+                </td>
+                <td>
+                    <div class="col-xs-1">
+                        <img class="deviceThumb" src="{{getDeviceThumbnailForDeviceType(device.type)}}">
+                        <label class="label label-primary">{{device.type}}</label>
+                    </div>
+                </td>
+                <td>{{device.serial}}</td>
+                <td>{{device.softwareVersion || "?"}}<button class="btn btn-success table-button" ng-if="device.updateAvailable">Update</button> </td>
+                <td><a href="#">{{device.jobs.length}} {{device.jobs.length === 1 ? "Job" : "Jobs"}}</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

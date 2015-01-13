@@ -1,0 +1,31 @@
+<style>
+    .nav-header {background-color: lightgray;}
+    .toggled {background-color: lightblue;}
+    #moreTitle {font-size:14px;}
+</style>
+
+<div class="panel panel-primary" id="navPane" ng-controller="navCtrl">
+    <div class="panel-heading">
+        <h4 class="panel-title">View By:</h4>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-pills nav-stacked" role="tablist">
+            <li ng-repeat="button in paneButtons" role="presentation" ng-click="toggleButton(button)" ng-class="{'active': button.toggled}">
+                <a href="{{button.link}}">{{button.title}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="panel panel-default" ng-controller="navCtrl">
+    <div class="panel-heading">
+        <h6 class="panel-title" id="moreTitle">More</h6>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-pills nav-stacked" role="tablist">
+            <li ng-repeat="button in supportButtons" role="presentation">
+                <a href="{{button.link}}">{{button.title}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
